@@ -7,7 +7,6 @@
 ├── classes.txt               # COCO 标签文件
 ├── coco128                   # COCO128 数据集
 ├── coco_164                  # COCO 图像 164 数据集
-├── copy_videoimgs.py         # 复制视频中的图片到新的 images 和 labels 文件夹
 ├── count_labels.py           # 标签计数脚本
 ├── create_none_labels.py     # 创建空标签文件脚本
 ├── create_rk_dataset.py      # 创建 RKNN 校验数据集脚本
@@ -26,7 +25,7 @@
 └── video                     # 视频文件夹
 
 crop_image_from_yolo_txt.py   # 要根据YOLO格式的txt文件裁剪图像并保存
-
+xmltoyolo.py                  # voc xml to yolo
 ```
 
 ### 详细说明
@@ -34,7 +33,6 @@ crop_image_from_yolo_txt.py   # 要根据YOLO格式的txt文件裁剪图像并�
 - **classes.txt**: 包含 COCO 数据集的类别标签。
 - **coco128**: COCO128 数据集文件夹。
 - **coco_164**: COCO 图像 164 数据集文件夹。
-- **copy_videoimgs.py**: 用于从视频中提取图片并保存到指定的 `images` 和 `labels` 文件夹。
 - **count_labels.py**: 统计标签文件中各类别标签的数量。
 - **create_none_labels.py**: 创建空的标签文件，通常用于没有目标对象的图像。
 - **create_rk_dataset.py**: 创建用于 RKNN 模型校验的数据集。

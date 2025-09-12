@@ -12,13 +12,13 @@ import os
 import shutil
 if __name__ == '__main__':
 
-    data_base_path = "test"
+    data_base_path = "/home/igs/yhj_demo/Data_enhancement/OriginalData/HQR"
 
     if not os.path.exists(os.path.join(data_base_path, "Nonelabel_img")):
         os.makedirs(os.path.join(data_base_path, "Nonelabel_img"))
 
-    img_base_path = os.path.join(data_base_path, "images")
-    label_base_path = os.path.join(data_base_path, "labels")
+    img_base_path = os.path.join(data_base_path, "JPEGImages")
+    label_base_path = os.path.join(data_base_path, "YOLOLabels")
     # img_base_path = "/home/igs/yhj_demo/Data_enhancement/Drone_val/images/val"
     # label_base_path = "/home/igs/yhj_demo/Data_enhancement/Drone_val/labels/val"
 

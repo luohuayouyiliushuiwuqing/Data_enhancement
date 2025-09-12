@@ -10,34 +10,53 @@
 """
 import os
 import shutil
+import random
 
-data_base_path = "/home/igs/yhj_demo/DroneDetectionDataset/coco"
+data_base_path = "/home/igs/yhj_demo/Data_enhancement/OriginalData/Urban-Surv-HV-UAV/COCO_all_50000"
 
-img_base_path = os.path.join(data_base_path, "images")
-label_base_path = os.path.join(data_base_path, "labels")
 
-img_list = os.listdir(img_base_path)
-label_list = os.listdir(label_base_path)
+def copy_all():
+    img_base_path = os.path.join(data_base_path, "images")
+    label_base_path = os.path.join(data_base_path, "labels")
+    img_list = os.listdir(img_base_path)
+    label_list = os.listdir(label_base_path)
+    img_list.sort()
+    img_new_path = os.path.join(data_base_path, "new", "images")
+    label_new_path = os.path.join(data_base_path, "new", "labels")
+    if not os.path.exists(img_new_path):
+        os.makedirs(img_new_path)
+    if not os.path.exists(label_new_path):
+        os.makedirs(label_new_path)
+    for img_name in img_list:
+        img_path = os.path.join(img_base_path, img_name)
+        label_name = img_name.replace(".jpg", ".txt")
+        label_path = os.path.join(label_base_path, label_name)
 
-img_list.sort()
+        ran = random.randint(0, 100)
 
-img_new_path = os.path.join(data_base_path, "new", "images")
-label_new_path = os.path.join(data_base_path, "new", "labels")
+        if ran < rann:
+            if os.path.exists(img_path) and os.path.exists(label_path):
+                shutil.copy(img_path, os.path.join(img_new_path, img_name))
+                shutil.copy(label_path, os.path.join(label_new_path, label_name))
 
-if not os.path.exists(img_new_path):
-    os.makedirs(img_new_path)
 
-if not os.path.exists(label_new_path):
-    os.makedirs(label_new_path)
+def copy_back():
+    img_base_path = os.path.join(data_base_path)
+    img_list = os.listdir(img_base_path)
+    img_list.sort()
+    img_new_path = os.path.join(data_base_path, "new", "images")
+    if not os.path.exists(img_new_path):
+        os.makedirs(img_new_path)
+    for img_name in img_list:
+        img_path = os.path.join(img_base_path, img_name)
+        ran = random.randint(0, 100)
+        if ran < rann:
+            if os.path.exists(img_path):
+                shutil.copy(img_path, os.path.join(img_new_path, img_name))
 
-count = 0
-for img_name in img_list:
-    img_path = os.path.join(img_base_path, img_name)
-    label_name=img_name.replace(".jpg", ".txt")
-    label_path = os.path.join(label_base_path, label_name)
 
-    if count % 10 == 0:
-        shutil.copy(img_path, os.path.join(img_new_path, img_name))
-        shutil.copy(label_path, os.path.join(label_new_path, label_name))
+rann = 50
 
-    count += 1
+# copy_back()
+
+copy_all()

@@ -149,3 +149,6 @@ cython_debug/
 /*Drone*
 /test
 /h264
+/OriginalData
+/rk_data.txt
+/rk_data

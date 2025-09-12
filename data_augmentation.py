@@ -117,18 +117,6 @@ def main():
     # 增强后的图像和标注文件保存路径
     enhance_images_files = os.path.join(root, "enhance", "images")
     enhance_labels_files = os.path.join(root, "enhance", "labels")
-    # print(enhance_images_files, enhance_labels_files)
-
-    # # 数据集类别列表
-    # label_list = ["person", "bicycle", "car", "motorcycle", "airplane", "bus", "train", "truck", "boat",
-    #               "trafficlight", "firehydrant", "stopsign", "parkingmeter", "bench", "bird", "cat", "dog", "horse",
-    #               "sheep", "cow", "elephant", "bear", "zebra", "giraffe", "backpack", "umbrella", "handbag", "tie",
-    #               "suitcase", "frisbee", "skis", "snowboard", "sportsball", "kite", "baseballbat", "baseballglove",
-    #               "skateboard", "surfboard", "tennisracket", "bottle", "wineglass", "cup", "fork", "knife", "spoon",
-    #               "bowl", "banana", "apple", "sandwich", "orange", "broccoli", "carrot", "hotdog", "pizza", "donut",
-    #               "cake", "chair", "couch", "pottedplant", "bed", "diningtable", "toilet", "tv", "laptop", "mouse",
-    #               "remote", "keyboard", "cellphone", "microwave", "oven", "toaster", "sink", "refrigerator", "book",
-    #               "clock", "vase", "scissors", "teddybear", "hairdrier", "toothbrush"]
 
     label_list = ['Drone']
 

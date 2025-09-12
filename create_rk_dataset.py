@@ -9,12 +9,27 @@
 @Date    ：2025/3/3 13:45 
 """
 import os
+import random
+import shutil
 
-path = "/home/igs/yhj_demo/RknnProjects/Projects/rknn_model_zoo/datasets/new_data/dataset_outdoor"
+data_path = "/home/igs/yhj_demo/PythonProject/HBoxData/HQR/JPEGImages"
 
-files = os.listdir(path)
+rk_data_path = "H"
 
-# 写入文件
-with open("/home/igs/yhj_demo/RknnProjects/Projects/rknn_model_zoo/datasets/new_data/dataset_outdoor.txt", 'w') as f:
+if not os.path.exists(rk_data_path):
+    os.makedirs(rk_data_path)
+
+files = []
+for file in os.listdir(data_path):
+    if file.endswith(".jpg"):
+        files.append(file)
+
+score = 400 / len(files)
+
+print(len(files), score)
+with open(f"{rk_data_path}.txt", 'w') as f:
     for file in files:
-        f.write(f"{os.path.join('/home/igs/yhj_demo/RknnProjects/Projects/rknn_model_zoo/datasets/new_data/dataset_outdoor',file)}\n")
+        ra = random.randint(1, 100)
+        if ra < score * 100:
+            f.write(f"./{rk_data_path}/{file}\n")
+            shutil.copy(os.path.join(data_path, file), os.path.join(rk_data_path, file))
