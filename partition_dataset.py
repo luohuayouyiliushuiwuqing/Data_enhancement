@@ -5,13 +5,39 @@ import os
 import shutil
 import random
 
+
+def get_valid_path(base_path, possible_names):
+    """获取存在的文件夹路径"""
+    for name in possible_names:
+        path = os.path.join(base_path, name)
+        if os.path.exists(path) and os.path.isdir(path):
+            return path
+    raise FileNotFoundError(f"在{base_path}下未找到任何一个文件夹: {possible_names}")
+
+
+def copy_with_empty_label(src_img, src_label, dst_img, dst_label):
+    """复制图片和标签，如果标签不存在则创建空文件"""
+    shutil.copy(src_img, dst_img)
+    if os.path.exists(src_label):
+        shutil.copy(src_label, dst_label)
+    else:
+        with open(dst_label, 'w', encoding='utf-8') as f:
+            pass
+
+
 if __name__ == '__main__':
-    base_path = "/home/igs/yhj_demo/Data_enhancement/OriginalData/Urban-Surv-HV-UAV/Basic_Data/VisDrone2019-DET-val"
+    base_path = "/media/igs/Dataset/Data_enhancement/OriginalData/Urban-Surv-HV-UAV/Aviation-HV-UAV_0915"
 
-    # 定义数据路径
-    new_image_folder = os.path.join(base_path, "JPEGImages")
-    new_label_folder = os.path.join(base_path, "YOLOLabels")
+    # 图像文件夹可能的名称
+    img_possible_names = ["images", "JPEGImages"]
+    # 标签文件夹可能的名称
+    label_possible_names = ["labels", "YOLOLabels"]
 
+    # 获取实际存在的图像和标签文件夹路径
+    new_image_folder = get_valid_path(base_path, img_possible_names)
+    new_label_folder = get_valid_path(base_path, label_possible_names)
+
+    # 定义目标文件夹
     train_image_folder = os.path.join(base_path, 'coco73', 'images', 'train')
     val_image_folder = os.path.join(base_path, 'coco73', 'images', 'val')
     train_label_folder = os.path.join(base_path, 'coco73', 'labels', 'train')
@@ -23,62 +49,35 @@ if __name__ == '__main__':
     os.makedirs(train_label_folder, exist_ok=True)
     os.makedirs(val_label_folder, exist_ok=True)
 
-    # 获取所有图片文件
-    image_files = [f for f in os.listdir(new_image_folder) if f.endswith('.jpg')]
-    total_count = len(image_files)
+    # 计数器
+    total_count = 0
+    train_count = 0
+    val_count = 0
 
-    if total_count == 0:
-        print("错误：在JPEGImages文件夹中未找到任何.jpg文件！")
-        exit(1)
+    # 按 7:3 随机划分
+    split_ratio = 0.7
 
-    # 按照 7:3 划分训练集和验证集
-    train_size = int(0.7 * total_count)
+    # 遍历图片并直接划分
+    for file_name in os.listdir(new_image_folder):
+        if not file_name.endswith('.jpg'):
+            continue
 
-    # 随机选择训练集样本（核心随机分配部分）
-    train_images = random.sample(image_files, train_size)
-    # 验证集为不在训练集中的样本
-    val_images = [img for img in image_files if img not in train_images]
-
-    print(f"数据集划分完成：总样本数 {total_count}，训练集 {len(train_images)}，验证集 {len(val_images)}")
-
-    # 复制文件到训练集
-    for image in train_images:
-        label_name = image.replace('.jpg', '.txt')
+        total_count += 1
+        img_path = os.path.join(new_image_folder, file_name)
+        label_name = file_name.replace('.jpg', '.txt')
         label_path = os.path.join(new_label_folder, label_name)
 
-        # 复制图片
-        shutil.copy(
-            os.path.join(new_image_folder, image),
-            os.path.join(train_image_folder, image)
-        )
-
-        # 处理标签文件
-        dest_label = os.path.join(train_label_folder, label_name)
-        if os.path.exists(label_path):
-            shutil.copy(label_path, dest_label)
+        if random.random() < split_ratio:
+            # 训练集
+            dst_img = os.path.join(train_image_folder, file_name)
+            dst_label = os.path.join(train_label_folder, label_name)
+            copy_with_empty_label(img_path, label_path, dst_img, dst_label)
+            train_count += 1
         else:
-            # 创建空标签文件
-            with open(dest_label, 'w', encoding='utf-8') as f:
-                pass
+            # 验证集
+            dst_img = os.path.join(val_image_folder, file_name)
+            dst_label = os.path.join(val_label_folder, label_name)
+            copy_with_empty_label(img_path, label_path, dst_img, dst_label)
+            val_count += 1
 
-    # 复制文件到验证集
-    for image in val_images:
-        label_name = image.replace('.jpg', '.txt')
-        label_path = os.path.join(new_label_folder, label_name)
-
-        # 复制图片
-        shutil.copy(
-            os.path.join(new_image_folder, image),
-            os.path.join(val_image_folder, image)
-        )
-
-        # 处理标签文件
-        dest_label = os.path.join(val_label_folder, label_name)
-        if os.path.exists(label_path):
-            shutil.copy(label_path, dest_label)
-        else:
-            # 创建空标签文件
-            with open(dest_label, 'w', encoding='utf-8') as f:
-                pass
-
-    print("数据集划分完成！训练集和验证集已准备好。")
+    print(f"数据集划分完成：总样本数 {total_count}，训练集 {train_count}，验证集 {val_count}")
