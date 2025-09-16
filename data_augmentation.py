@@ -123,8 +123,6 @@ def main():
     # 执行数据增强
     apply_data_augmentation(old_images_files, old_labels_files, label_list, enhance_images_files, enhance_labels_files)
 
-    shutil.copy("classes.txt", os.path.join(enhance_labels_files, "classes.txt"))
-
 
 if __name__ == '__main__':
     main()
