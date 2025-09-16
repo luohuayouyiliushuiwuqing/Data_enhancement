@@ -4,7 +4,6 @@
 ### 文件结构
 
 ```
-├── classes.txt               # COCO 标签文件
 ├── coco128                   # COCO128 数据集
 ├── coco_164                  # COCO 图像 164 数据集
 ├── count_labels.py           # 标签计数脚本
@@ -30,7 +29,6 @@ xmltoyolo.py                  # voc xml to yolo
 
 ### 详细说明
 
-- **classes.txt**: 包含 COCO 数据集的类别标签。
 - **coco128**: COCO128 数据集文件夹。
 - **coco_164**: COCO 图像 164 数据集文件夹。
 - **count_labels.py**: 统计标签文件中各类别标签的数量。

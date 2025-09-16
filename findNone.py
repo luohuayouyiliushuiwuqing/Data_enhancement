@@ -37,8 +37,6 @@ if __name__ == '__main__':
     # 获取实际存在的图像和标签文件夹路径
     img_base_path = get_valid_path(data_base_path, img_possible_names)
     label_base_path = get_valid_path(data_base_path, label_possible_names)
-    # img_base_path = "/home/igs/yhj_demo/Data_enhancement/Drone_val/images/val"
-    # label_base_path = "/home/igs/yhj_demo/Data_enhancement/Drone_val/labels/val"
 
     img_list = os.listdir(img_base_path)
     label_list = os.listdir(label_base_path)
