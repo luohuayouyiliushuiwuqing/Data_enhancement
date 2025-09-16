@@ -9,9 +9,9 @@ BLUE='\033[0;34m'
 NC='\033[0m' # No Color
 
 # Configuration paths - modify as needed
-COMPRESSED_DIR="Aviation-HV-UAV_Split_Compressed"   # Directory containing archives
-DEST_DIR="Aviation-HV-UAV_Split"                    # Extraction target directory
-MERGED_DIR="Aviation-HV-UAV-merged"                 # Final merged directory
+COMPRESSED_DIR="/data/Aviation-HV-UAV-0915-Split-Compressed"   # Directory containing archives
+DEST_DIR="/data/Aviation-HV-UAV-0915-Split"                    # Extraction target directory
+MERGED_DIR="/data/Aviation-HV-UAV-0915-merged"                 # Final merged directory
 
 # Check for required tools
 check_dependencies() {
@@ -26,13 +26,13 @@ check_dependencies() {
 
 # Check available disk space
 check_disk_space() {
-    local required_space=$1
+    local required_space=$1  # 单位：KB
     local target_dir=$2
 
-    # Get available space in target partition (KB)
-    local available_space=$(df -P "$target_dir" | tail -1 | awk '{print $4}')
+    # 使用 --block-size=1K 强制 df 输出单位为KB
+    local available_space=$(df -P --block-size=1K "$target_dir" | tail -1 | awk '{print $4}')
 
-    # Convert to GB for display
+    # 转换为GB显示（KB → MB → GB）
     local required_gb=$((required_space / 1024 / 1024))
     local available_gb=$((available_space / 1024 / 1024))
 
@@ -95,10 +95,12 @@ main() {
     fi
 
     # Estimate required space (2x total archive size as safety margin)
-    local total_size=$(du -c "$COMPRESSED_DIR"/*.tar.* 2>/dev/null | tail -1 | awk '{print $1}')
-    local required_space=$((total_size * 2 * 1024))  # Convert to KB and double
+    # 使用 -k 强制 du 输出单位为KB（1024字节）
+    local total_size=$(du -c -k "$COMPRESSED_DIR"/*.tar.* 2>/dev/null | tail -1 | awk '{print $1}')
+    local required_space=$((total_size * 2))  # 直接乘以2（已为KB单位）
 
     # Check target partition space
+    # 强制 df 使用KB单位，与 required_space 保持一致
     check_disk_space "$required_space" "$DEST_DIR"
 
     # Process each archive
