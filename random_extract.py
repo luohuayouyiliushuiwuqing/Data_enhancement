@@ -46,8 +46,8 @@ def random_copy_files(src_dir: str, dst_dir: str, suffix: Optional[str], prob: f
 
 def copy_images_and_labels(base_path: str, new_name: str, prob: float) -> None:
     """随机复制 images 和 labels 文件"""
-    img_src = get_valid_path(base_path, img_possible_names)
-    label_src = get_valid_path(base_path, label_possible_names)
+    img_src,_ = get_valid_path(base_path, img_possible_names)
+    label_src,_ = get_valid_path(base_path, label_possible_names)
 
     img_dst = os.path.join(base_path, new_name, "images")
     label_dst = os.path.join(base_path, new_name, "labels")

@@ -22,8 +22,8 @@ if __name__ == '__main__':
     base_path = "/data/CombineData/OriginalData/Urban-Surv-HV-UAV/Aviation-HV-UAV/10.0"
 
     # 获取实际存在的图像和标签文件夹路径
-    new_image_folder = get_valid_path(base_path, img_possible_names)
-    new_label_folder = get_valid_path(base_path, label_possible_names)
+    new_image_folder,_ = get_valid_path(base_path, img_possible_names)
+    new_label_folder,_ = get_valid_path(base_path, label_possible_names)
 
     # 定义目标文件夹
     train_image_folder = os.path.join(base_path, 'coco73', 'images', 'train')
