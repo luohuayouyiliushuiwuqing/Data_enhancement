@@ -3,28 +3,18 @@
 
 import os
 import shutil
+import sys
+from pathlib import Path
 
+from utils.pathutils import get_valid_path, img_possible_names, label_possible_names
 
-def get_valid_path(base_path, possible_names):
-    """获取存在的文件夹路径"""
-    for name in possible_names:
-        path = os.path.join(base_path, name)
-        if os.path.exists(path) and os.path.isdir(path):
-            return path, name
-    raise FileNotFoundError(f"在{base_path}下未找到任何一个文件夹: {possible_names}")
-
-
-base_path = "/media/igs/Dataset/Data_enhancement/OriginalData/Urban-Surv-HV-UAV/Aviation-HV-UAV_0915"
-# 图像文件夹可能的名称
-img_possible_names = ["images", "JPEGImages"]
-# 标签文件夹可能的名称
-label_possible_names = ["labels", "YOLOLabels"]
+base_path = "/data/CombineData/OriginalData/Urban-Surv-HV-UAV/Basic_Data/coco_car"
 
 # 获取实际存在的图像和标签文件夹路径
 img_path, img_folder_name = get_valid_path(base_path, img_possible_names)
 label_path, label_folder_name = get_valid_path(base_path, label_possible_names)
 
-output_base_path = base_path + "_Split"
+output_base_path = os.path.join(base_path, Path(base_path).name + "_Split")
 
 count = 0
 folder_count = 1
@@ -40,9 +30,9 @@ if not os.path.exists(back_img_path):
     os.makedirs(back_img_path)
 
 for filename in os.listdir(img_path):
-    if filename.endswith(('.jpg')):
+    if filename.endswith('.jpg'):
         if count % folder_limit == 0:
-            folder_name = f"folder_{folder_count}"
+            folder_name = f"{Path(base_path).name}_{folder_count}"
             folder_path = os.path.join(output_base_path, folder_name)
             folder_img_path = os.path.join(folder_path, img_folder_name)
             folder_label_path = os.path.join(folder_path, label_folder_name)

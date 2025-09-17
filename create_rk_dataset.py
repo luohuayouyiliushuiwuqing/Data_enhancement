@@ -12,9 +12,9 @@ import os
 import random
 import shutil
 
-data_path = "/home/igs/yhj_demo/PythonProject/HBoxData/HQR/JPEGImages"
+data_path = "/data/CombineData/OriginalData/Urban-Surv-HV-UAV/Aviation-HV-UAV/10.0/images"
 
-rk_data_path = "H"
+rk_data_path = "Aviation-HV-UAV"
 
 if not os.path.exists(rk_data_path):
     os.makedirs(rk_data_path)

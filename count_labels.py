@@ -55,7 +55,7 @@ def print_results(class_counts: Dict[str, int], total_objects: int) -> None:
 
 
 if __name__ == "__main__":
-    train_label_folder = "/media/igs/Dataset/Data_enhancement/OriginalData/Urban-Surv-HV-UAV/Aviation-HV-UAV_0915/labels"
+    train_label_folder = "/data/CombineData/OriginalData/Urban-Surv-HV-UAV/Basic_Data/coco/labels"
 
     class_counts, total_objects = count_classes_in_folder(train_label_folder)
     print_results(class_counts, total_objects)

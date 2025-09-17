@@ -5,14 +5,7 @@ import os
 import shutil
 import random
 
-
-def get_valid_path(base_path, possible_names):
-    """获取存在的文件夹路径"""
-    for name in possible_names:
-        path = os.path.join(base_path, name)
-        if os.path.exists(path) and os.path.isdir(path):
-            return path
-    raise FileNotFoundError(f"在{base_path}下未找到任何一个文件夹: {possible_names}")
+from utils.pathutils import get_valid_path, img_possible_names, label_possible_names
 
 
 def copy_with_empty_label(src_img, src_label, dst_img, dst_label):
@@ -26,12 +19,7 @@ def copy_with_empty_label(src_img, src_label, dst_img, dst_label):
 
 
 if __name__ == '__main__':
-    base_path = "/media/igs/Dataset/Data_enhancement/OriginalData/Urban-Surv-HV-UAV/Aviation-HV-UAV_0915"
-
-    # 图像文件夹可能的名称
-    img_possible_names = ["images", "JPEGImages"]
-    # 标签文件夹可能的名称
-    label_possible_names = ["labels", "YOLOLabels"]
+    base_path = "/data/CombineData/OriginalData/Urban-Surv-HV-UAV/Aviation-HV-UAV/10.0"
 
     # 获取实际存在的图像和标签文件夹路径
     new_image_folder = get_valid_path(base_path, img_possible_names)

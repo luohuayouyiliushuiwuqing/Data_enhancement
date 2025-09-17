@@ -15,6 +15,8 @@ import shutil
 import random
 from typing import Optional
 
+from utils.pathutils import get_valid_path, img_possible_names, label_possible_names
+
 
 def ensure_dir(path: str) -> None:
     """确保目录存在，不存在则创建"""
@@ -44,8 +46,8 @@ def random_copy_files(src_dir: str, dst_dir: str, suffix: Optional[str], prob: f
 
 def copy_images_and_labels(base_path: str, new_name: str, prob: float) -> None:
     """随机复制 images 和 labels 文件"""
-    img_src = os.path.join(base_path, "images")
-    label_src = os.path.join(base_path, "labels")
+    img_src = get_valid_path(base_path, img_possible_names)
+    label_src = get_valid_path(base_path, label_possible_names)
 
     img_dst = os.path.join(base_path, new_name, "images")
     label_dst = os.path.join(base_path, new_name, "labels")
@@ -66,8 +68,8 @@ def copy_images_and_labels(base_path: str, new_name: str, prob: float) -> None:
 
 
 if __name__ == "__main__":
-    data_base_path = "/media/igs/Dataset/Data_enhancement/OriginalData/Urban-Surv-HV-UAV/Basic_Data/coco_car"
-    extract_prob = 0.45
+    data_base_path = "/data/CombineData/OriginalData/Urban-Surv-HV-UAV/Aviation-HV-UAV"
+    extract_prob = 0.1
 
     # # 随机复制单独的 images（可选，独立功能）
     # random_copy_files(

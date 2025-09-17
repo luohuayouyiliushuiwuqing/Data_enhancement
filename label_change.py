@@ -5,7 +5,7 @@ import os
 # 文件夹路径
 labels_base_path = "/media/igs/Dataset/Data_enhancement/OriginalData/Urban-Surv-HV-UAV/Basic_Data/coco_car/labels"
 
-target_e = {"1": 1}
+target_e = {"0": 0, "2": 1, "4": "3"}
 
 txt_names = os.listdir(labels_base_path)
 for txt_name in txt_names:
