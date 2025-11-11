@@ -21,8 +21,8 @@ if __name__ == '__main__':
         os.makedirs(os.path.join(data_base_path, "Nonelabel_img"))
 
     # 获取实际存在的图像和标签文件夹路径
-    img_base_path,_ = get_valid_path(data_base_path, img_possible_names)
-    label_base_path,_ = get_valid_path(data_base_path, label_possible_names)
+    img_base_path, _ = get_valid_path(data_base_path, img_possible_names)
+    label_base_path, _ = get_valid_path(data_base_path, label_possible_names)
 
     img_list = os.listdir(img_base_path)
     label_list = os.listdir(label_base_path)

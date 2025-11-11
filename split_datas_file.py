@@ -3,7 +3,6 @@
 
 import os
 import shutil
-import sys
 from pathlib import Path
 
 from utils.pathutils import get_valid_path, img_possible_names, label_possible_names
@@ -32,7 +31,7 @@ if not os.path.exists(back_img_path):
 for filename in os.listdir(img_path):
     if filename.endswith('.jpg'):
         if count % folder_limit == 0:
-            folder_name = f"{Path(base_path).name}_{folder_count}"
+            folder_name = f"folder_{folder_count}" # 固定folder名称，方便脚本运行
             folder_path = os.path.join(output_base_path, folder_name)
             folder_img_path = os.path.join(folder_path, img_folder_name)
             folder_label_path = os.path.join(folder_path, label_folder_name)
