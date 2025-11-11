@@ -2,23 +2,23 @@
 set -e
 
 # =====================
-# ÅäÖÃ
+# é…ç½®
 # =====================
-LOCAL_DIR="/media/igs/Dataset/Data_enhancement/OriginalData/Urban-Surv-HV-UAV/Aviation-HV-UAV_0915_Split/compressed"   # ±¾µØÑ¹Ëõ°üËùÔÚÄ¿Â¼
+LOCAL_DIR="/media/igs/Dataset/Data_enhancement/OriginalData/Urban-Surv-HV-UAV/Aviation-HV-UAV_0915_Split/compressed"   # æœ¬åœ°å‹ç¼©åŒ…æ‰€åœ¨ç›®å½•
 REMOTE_USER="ubuntu"
 REMOTE_HOST="117.50.171.216"
 REMOTE_DIR="/data"
-FILES="${LOCAL_DIR}/archive_*.tar.zst*"   # ±¾µØÒªÉÏ´«µÄÎÄ¼ş
-TIMEOUT=1000                             # µ¥¸öÎÄ¼şÉÏ´«×î³¤Ê±¼ä£¨Ãë£©
+FILES="${LOCAL_DIR}/archive_*.tar.zst*"   # æœ¬åœ°è¦ä¸Šä¼ çš„æ–‡ä»¶
+TIMEOUT=1000                             # å•ä¸ªæ–‡ä»¶ä¸Šä¼ æœ€é•¿æ—¶é—´ï¼ˆç§’ï¼‰
 
 # =====================
-# ÉÏ´«º¯Êı£¨´øÖØÊÔ£©
+# ä¸Šä¼ å‡½æ•°ï¼ˆå¸¦é‡è¯•ï¼‰
 # =====================
 upload_file() {
     local file="$1"
     echo "==== upload to server: $file ===="
 
-    # ÎŞÏŞÖØÊÔÖ±µ½´«Êä³É¹¦
+    # æ— é™é‡è¯•ç›´åˆ°ä¼ è¾“æˆåŠŸ
     until timeout "$TIMEOUT" rsync -avP --append-verify "$file" \
         ${REMOTE_USER}@${REMOTE_HOST}:${REMOTE_DIR}/; do
         echo "$file Transmission interruption or freezing, try again..."
@@ -29,7 +29,7 @@ upload_file() {
 }
 
 # =====================
-# Ö÷Á÷³Ì
+# ä¸»æµç¨‹
 # =====================
 for f in $FILES; do
     if [ -f "$f" ]; then
