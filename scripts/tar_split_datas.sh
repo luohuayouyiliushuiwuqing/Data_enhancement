@@ -1,13 +1,13 @@
 #!/bin/bash
 set -e
 
-BASE_DIR="/media/igs/Dataset/Data_enhancement/OriginalData/Urban-Surv-HV-UAV/Aviation-HV-UAV_0915_Split"   # ĞŞ¸ÄÎªÄãµÄÄ¿Â¼
+BASE_DIR="/media/igs/Dataset/Data_enhancement/OriginalData/Urban-Surv-HV-UAV/Aviation-HV-UAV_0915_Split"   # ä¿®æ”¹ä¸ºä½ çš„ç›®å½•
 OUT_PREFIX="archive"
-NPROC=8                             # ²¢ĞĞÈÎÎñÊı£¨½¨ÒéÉèÎª CPU ºËĞÄÊı£©
+NPROC=8                             # å¹¶è¡Œä»»åŠ¡æ•°ï¼ˆå»ºè®®è®¾ä¸º CPU æ ¸å¿ƒæ•°ï¼‰
 
 export BASE_DIR OUT_PREFIX NPROC
 
-# È·±£Êä³öÄ¿Â¼´æÔÚ
+# ç¡®ä¿è¾“å‡ºç›®å½•å­˜åœ¨
 mkdir -p "$BASE_DIR/compressed"
 
 compress_folder() {
@@ -18,11 +18,11 @@ compress_folder() {
 
     echo "Compressing $name -> $out_file"
 
-    # Ê¹ÓÃ tar + zstd ¶àÏß³ÌÑ¹Ëõ£¨±È xz ¸ü¿ì£©
+    # ä½¿ç”¨ tar + zstd å¤šçº¿ç¨‹å‹ç¼©ï¼ˆæ¯” xz æ›´å¿«ï¼‰
     tar -cf - -C "$(dirname "$folder")" "$name" \
         | zstd -T$NPROC -19 -o "$out_file"
 
-    # Éú³É sha256 Ğ£Ñé
+    # ç”Ÿæˆ sha256 æ ¡éªŒ
     sha256sum "$out_file" > "$out_file.sha256"
 
     echo "Done: $out_file (sha256 in $out_file.sha256)"
@@ -30,6 +30,6 @@ compress_folder() {
 
 export -f compress_folder
 
-# ±éÀú folder_* ²¢ĞĞÑ¹Ëõ
+# éå† folder_* å¹¶è¡Œå‹ç¼©
 find "$BASE_DIR" -maxdepth 1 -type d -name "folder_*" \
   | xargs -n1 -P"$NPROC" -I{} bash -c 'compress_folder "$@"' _ {}

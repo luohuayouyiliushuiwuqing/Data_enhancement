@@ -9,9 +9,9 @@ BLUE='\033[0;34m'
 NC='\033[0m' # No Color
 
 # Configuration paths - modify as needed
-COMPRESSED_DIR="/data/Aviation-HV-UAV-0915-Split-Compressed"   # Directory containing archives
-DEST_DIR="/data/Aviation-HV-UAV-0915-Split"                    # Extraction target directory
-MERGED_DIR="/data/Aviation-HV-UAV-0915-merged"                 # Final merged directory
+COMPRESSED_DIR="/data/dataset/Aviation-HV-Split-Compressed/"   # Directory containing archives
+DEST_DIR="/data/dataset/Aviation-HV-Split"                    # Extraction target directory
+MERGED_DIR="/data/dataset/Aviation-HV-merged"                 # Final merged directory
 
 # Check for required tools
 check_dependencies() {
@@ -221,3 +221,7 @@ main() {
 
 # Start main function
 main "$@"
+
+
+# find . -name "archive_folder_*.tar.zst" -exec tar -I zstd -xf {} -C compressed \;
+# cp -r  compressed/folder_*/* dataset/Aviation-UAV-Drone-merged/
